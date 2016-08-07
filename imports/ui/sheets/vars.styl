@@ -1,0 +1,196 @@
+body
+	background-image: url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/skulls.png)
+	background-repeat: repeat
+	position: relative
+
+	//animation-name flow
+//	animation-duration 20s
+//	animation-iteration-count infinite
+//	animation-timing-function linear
+//
+//@keyframes flow
+//	from
+//		background-position: 0 0
+//	to
+//		background-position: 100% 100%
+
+h1
+	font-size: 3em
+	margin-top: 0
+	margin-bottom: 30px
+h2
+	margin-top: 0
+h3
+	font-size: 2em
+	margin-top: 0
+	margin-bottom: 20px
+
+.app__sidebar
+	width: 320px
+	border-right: 1px solid #EEEEEE
+	background: rgba(255,255,255,.8)
+	min-height 100vh
+	margin-left: -320px
+	transition .3s ease-in-out
+
+	&.opened
+		margin-left: 0
+
+	&::before
+		content ''
+		color: rgba(0, 0, 0, 0.870588);
+		transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+		box-sizing: border-box;
+		font-family: Roboto, sans-serif;
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+		border-radius: 0px;
+		position: relative;
+		z-index: 1100;
+		width: 100%;
+		padding-left: 24px;
+		padding-right: 24px;
+		height: 64px
+		display: block
+		background-color: rgb(222, 79, 79);
+
+.app__nav
+	margin-top: 40px
+
+.app__section
+	min-height calc(100vh - 64px)
+	width 100%
+	position: relative
+	padding: 30px 15px
+
+.app__layout main
+	position: relative
+
+	&::before
+		content ''
+		@extend .posa
+		background-color: rgba(255,255,255, .85)
+
+.app__accounts
+	margin-right: 20px
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 0;
+
+
+#login-name-link,
+#login-sign-in-link
+	color: #fff
+	line-height: 45px
+
+#login-dropdown-list
+	top: 10px
+	right: -1px
+	left auto
+
+#login-buttons .login-close-text
+	float: right;
+	right: 10px;
+
+
+.color--brand
+	color: rgb(222, 79, 79)
+	
+a.underline:hover
+	text-decoration: underline
+
+.tearsheet
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-style: solid solid none;
+	border-top-color: rgb(217, 217, 217);
+	border-right-color: rgb(217, 217, 217);
+	border-left-color: rgb(217, 217, 217);
+	max-width: 360px
+	padding: 20px
+	margin-bottom: 30px
+	overflow: hidden;
+	position: relative
+
+	&.wide
+		max-width: 720px
+
+
+	&::after
+		content ''
+		background-image: url(http://www.material-ui.com/images/bottom-tear.svg)
+		background-repeat: repeat-x
+		display: block
+		position: absolute
+		bottom: 0
+		left: 0
+		height: 10px
+		width: 100%
+
+.tearsheet__subheader
+	margin-top: -20px
+	margin-left: -16px
+
+.form--group-create
+
+	.image
+		width: 100%
+		max-height: 180px
+		object-fit: cover
+		margin-top: 20px
+
+	.logo
+		height: 150px
+		margin-top: 20px
+		background-size: 100% auto
+		background-position: center center
+		background-repeat: no-repeat
+
+	.btn--create
+		margin-top: 20px !important
+		margin-bottom: 20px !important
+
+		button
+			background-color: rgb(222, 79, 79) !important
+
+.form--add-item
+
+	button
+		margin-top: 30px
+		background-color: rgb(255, 152, 0) !important
+
+.badge--notification
+	top: 0;
+	padding-bottom: 0 !important;
+	padding-top: 0 !important;
+	margin-right: 20px;
+
+.group__widget
+	width: 100%
+	display: inline-block
+	margin-bottom: 30px
+
+	.members
+		font-style: italic;
+		font-size: 14px;
+
+	&:hover
+		box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px !important
+
+	.logo
+		background-size: 100% auto
+		height auto
+		width: 100%
+
+		&::before
+			content ''
+			display: block
+			padding-bottom: 56%
+
+
+	.content
+		padding: 20px
+
+.btn--join button
+	background-color: rgb(222, 79, 79) !important

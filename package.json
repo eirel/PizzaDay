@@ -1,0 +1,43 @@
+{
+  "name": "pizzaday",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "casper": "^0.1.1",
+    "material-ui": "^0.15.3",
+    "meteor-node-stubs": "~0.2.0",
+    "phantom": "^2.1.14",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "react-komposer": "^1.13.1",
+    "react-mounter": "^1.2.0",
+    "react-tap-event-plugin": "^1.0.0",
+    "redux-thunk": "^2.1.0"
+  },
+  "description": "A small app for tracking orded pizza",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eirel/PizzaDay.git"
+  },
+  "keywords": [
+    "meteor",
+    "pizza"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eirel/PizzaDay/issues"
+  },
+  "homepage": "https://github.com/eirel/PizzaDay#readme",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-preset-stage-1": "^6.5.0",
+    "muicss": "^0.6.8"
+  }
+}

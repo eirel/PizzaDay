@@ -1,0 +1,110 @@
+/* Fonts */
+roboto = 'Roboto', sans-serif
+
+/* Defaults */
+base-font = roboto
+base-weight = 400
+base-color = #fff
+
+html,
+body
+	font-family base-font
+	font-weight base-weight
+	height 100%
+	margin: 0
+
+body
+	overflow-x hidden !important
+	background-color base-color
+a
+	text-decoration none
+*
+	box-sizing border-box
+
+//::-webkit-scrollbar
+//	display none
+
+.flex
+	display -webkit-flex
+	display -moz-flex
+	display -ms-flex
+	display -o-flex
+	display flex
+	flex-wrap wrap
+
+.flex--nowrap
+	@extend .flex
+	flex-wrap nowrap
+
+.flex--justify-center
+	@extend .flex
+	justify-content center
+
+.flex--align-center
+	@extend .flex
+	align-items: center
+
+.flex--between
+	@extend .flex
+	justify-content space-between
+
+.flex--around
+	@extend .flex
+	justify-content space-around
+
+.flex--center
+	@extend .flex
+	justify-content center
+	align-items: center
+
+.flex--start
+	@extend .flex
+	justify-content flex-start
+
+.flex--end
+	@extend .flex
+	justify-content flex-end
+
+.btn
+	display: inline-block
+	outline none
+	background-color: transparent
+	border none
+	cursor: pointer
+
+ul
+	padding: 0
+	list-style none
+
+p
+	margin-top: 0
+	margin-bottom: 0
+
+main
+	width: 100%
+
+.jcenter
+	left: 50%
+	transform: translateX(-50%)
+
+.invisible
+	visibility hidden
+	opacity: 0
+
+.hidden
+	display: none
+
+.bgcont
+	background-size contain
+	background-repeat no-repeat
+	background-position center center
+
+.posa
+	position: absolute
+	height: 100%
+	width: 100%
+	top: 0
+	left: 0
+
+.tac
+	text-align: center

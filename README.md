@@ -1,5 +1,4 @@
 # PizzaDay
-A small app for tracking orded pizza
 
 ### Introduction
 You are software engineer in small development company. Every Wednesday your teammates

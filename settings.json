@@ -1,21 +1,3 @@
 {
-  "public": {
-    "accounts": {
-      "styles": {
-        "services": {
-          "google": {
-            "backgroundColor": "#46629e",
-            "labelColor": "#ffffff",
-            "disabledBackgroundColor": "#545966",
-            "disabledLabelColor": "#aca4a4",
-            "rippleColor": "#ffffff",
-            "fullWidth": true,
-            "style": {
-              "width": "300px"
-            }
-          }
-        }
-      }
-    }
-  }
+
 }

@@ -1,25 +1,17 @@
 import React from 'react'
 import AddItem from './add'
-import MenuList from './list'
+import MenuTable from './table'
+import {composeWithTracker} from 'react-komposer'
+import Subheader from 'material-ui/Subheader'
 
-const onItemAdd = (id) => (event) => {
-    event.preventDefault()
+const Menu = ({id, menu, isMember}) => {
+    return (
+        <div className="menu tearsheet middle">
+            <Subheader className="tearsheet__subheader">Menu</Subheader>
+            { isMember ? <AddItem id={id} /> : <div></div> }
+            <MenuTable id={id} menu={menu} isMember={isMember} />
+        </div>
+    )
+}   
 
-    Meteor.call('addMenuItem', {
-        id: id,
-        name: event.target.name.value,
-        price: event.target.price.value
-    })
-
-    event.target.name.value = ''
-    event.target.price.value = ''
-}
-
-const Menu = ({ id }) => (
-    <div className="tearsheet wide">
-        <AddItem onItemAdd={onItemAdd(id)} />
-        <MenuList />
-    </div>
-)
-
-export { Menu }
+export default Menu

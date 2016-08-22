@@ -69,7 +69,7 @@ h3
 	&::before
 		content ''
 		@extend .posa
-		background-color: rgba(255,255,255, .85)
+		background-color: rgba(255,255,255, .95)
 
 .app__accounts
 	margin-right: 20px
@@ -107,15 +107,11 @@ a.underline:hover
 	border-top-color: rgb(217, 217, 217);
 	border-right-color: rgb(217, 217, 217);
 	border-left-color: rgb(217, 217, 217);
-	max-width: 360px
+	max-width: 100%
 	padding: 20px
 	margin-bottom: 30px
 	overflow: hidden;
 	position: relative
-
-	&.wide
-		max-width: 720px
-
 
 	&::after
 		content ''
@@ -155,6 +151,7 @@ a.underline:hover
 			background-color: rgb(222, 79, 79) !important
 
 .form--add-item
+	margin-bottom: 20px
 
 	button
 		margin-top: 30px
@@ -166,7 +163,28 @@ a.underline:hover
 	padding-top: 0 !important;
 	margin-right: 20px;
 
-.group__widget
+
+/* -------------------- Groups & Invites -------------------- */
+
+.group__heading
+	text-align: center
+	display: inline-block;
+
+.group__logo
+	width: 180px
+	height: 180px
+	display: inline-block
+	border-radius 50%
+	margin-right: 20px
+	margin-bottom: 20px
+	@extend .bgcover
+
+.group__btn
+	margin-top: 40px
+
+
+.group__widget,
+.invite__widget
 	width: 100%
 	display: inline-block
 	margin-bottom: 30px
@@ -192,5 +210,84 @@ a.underline:hover
 	.content
 		padding: 20px
 
-.btn--join button
+.btn--delete button
 	background-color: rgb(222, 79, 79) !important
+
+.btn--join button
+	background-color: #009688 !important
+
+
+/* -------------------- Menu -------------------- */
+
+.menu
+	padding-bottom: 30px
+
+.menu__item
+	padding: 15px 0
+	border-bottom: 2px solid rgba(224, 224, 224,.9)
+
+	&.edit td
+		background-color: rgba(255, 255, 141,.8) !important
+
+	&:last-child
+		border-bottom: none !important
+
+	.quantity__btn
+		display: inline-block !important
+
+		button
+			width: 25px !important
+			height: 25px !important
+		svg
+			transform: scale(.8)
+
+	.quantity__icon
+		width: inherit !important
+		height: inherit !important
+
+	.transparent
+		background: transparent
+		border none
+		outline none
+
+	.quantity
+		margin: 0 10px
+		//width: 100%
+
+	.quantity__wrapper
+		justify-content: center
+
+	.cell
+		position: relative
+
+		.cell__container
+			@extend .posa
+			@extend .flex--align-center
+			padding: 0 24px;
+
+		input
+			max-width: 100%
+
+	.price
+		font-style: italic
+
+	.smallIcon
+		width: 24px
+		height: 24px
+		padding: 0
+
+	.small
+		width: 28px
+		height: 28px
+		padding: 0
+
+/* -------------------- Orders -------------------- */
+
+.orders__table, .orders__body
+	min-width: 700px
+
+.orders__footer
+	td
+		padding: 0 !important
+	td:first-child
+		display: none !important

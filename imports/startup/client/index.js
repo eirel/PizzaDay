@@ -1,7 +1,11 @@
-import { Meteor } from 'meteor/meteor'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 import './routes'
-import '../../ui/sheets/index.styl'
+import '../../ui/styles/index.styl'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import { Meteor } from 'meteor/meteor'
+
+Accounts.ui.config({
+    passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
+})
 
 Meteor.startup(() => {
     Hooks.init()

@@ -1,13 +1,13 @@
 import React from 'react'
 import { Meteor } from 'meteor/meteor'
-import {mount} from 'react-mounter'
+import { mount } from 'react-mounter'
 import { FlowRouter } from 'meteor/kadira:flow-router'
-
 import Layout from '../../ui/layouts'
 import Home from '../../ui/pages/home'
 import GroupsPage from '../../ui/pages/groups'
-import { SingleGroup } from '../../ui/components/groups/single'
 import EventsPage from '../../ui/pages/events'
+import SingleGroup from '../../ui/pages/single'
+import ProfilePage from '../../ui/pages/profile'
 
 Accounts.onLogin(function(){
     if (Session.get('authorized') === false) {
@@ -33,6 +33,7 @@ FlowRouter.route('/', {
     name: 'home',
     action() {
         mount(Layout, {
+            index: 1,
             content: (<Home />)
         })
     }
@@ -43,17 +44,8 @@ FlowRouter.route('/groups', {
     triggersEnter: [redirectOnSignedOut],
     action() {
         mount(Layout, {
+            index: 2,
             content: (<GroupsPage />)
-        })
-    }
-})
-
-FlowRouter.route('/events', {
-    name: 'events',
-    triggersEnter: [redirectOnSignedOut],
-    action() {
-        mount(Layout, {
-            content: (<EventsPage />)
         })
     }
 })
@@ -63,7 +55,30 @@ FlowRouter.route('/groups/:id', {
     triggersEnter: [redirectOnSignedOut],
     action(params) {
         mount(Layout, {
+            index: 2,
             content: (<SingleGroup id={params.id} />)
+        })
+    }
+})
+
+FlowRouter.route('/events', {
+    name: 'events',
+    triggersEnter: [redirectOnSignedOut],
+    action() {
+        mount(Layout, {
+            index: 3,
+            content: (<EventsPage />)
+        })
+    }
+})
+
+FlowRouter.route('/profile', {
+    name: 'invites',
+    triggersEnter: [redirectOnSignedOut],
+    action() {
+        mount(Layout, {
+            index: 4,
+            content: (<ProfilePage />)
         })
     }
 })

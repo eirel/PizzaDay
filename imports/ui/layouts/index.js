@@ -1,34 +1,24 @@
 import React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { Provider } from 'react-redux'
-import {store} from '../../store'
-
+import GroupsDialog from '../components/groups/dialog'
 import Header from '../components/header'
 import Sidebar from '../components/sidebar'
 
-const Layout = ({content, menu}) => {
+const Layout = ({index, content}) => {
     return (
-        <Provider store={store}>
-            <MuiThemeProvider>
-                <div className="app__layout">
-                    <div className="flex--nowrap">
-                        <Sidebar menu={menu} />
-                        <main>
-                            <Header />
-                            { content }
-                        </main>
-                    </div>
+        <MuiThemeProvider>
+            <div className="app__layout">
+                <GroupsDialog />
+                <div className="flex--nowrap">
+                    <Sidebar index={index}  />
+                    <main>
+                        <Header />
+                        { content }
+                    </main>
                 </div>
-            </MuiThemeProvider>
-        </Provider>
+            </div>
+        </MuiThemeProvider>
     )
 }
-//
-// function composer(props, onData) {
-//     const menu = Session.get('menu')
-//     onData(null, {menu})
-// }
-//
-// export default composeWithTracker(composer)(Layout)
 
 export default Layout

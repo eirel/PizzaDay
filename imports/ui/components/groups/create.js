@@ -1,11 +1,8 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import TextField from 'material-ui/TextField'
 import Subheader from 'material-ui/Subheader'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
-import SubscribeComponent from '../subscribe'
-import {connect} from 'react-redux'
-import * as actions from '../../../api/groups/actions'
 
 const styles = {
     errorStyle: {
@@ -22,30 +19,37 @@ const styles = {
     }
 }
 
-const mapStateToProps = state => state
+const getRandomInt = (min, max) =>
+    Math.floor(Math.random() * (max - min + 1) + min)
+
+export const getRandomKitten = () =>
+    `https://placekitten.com/${getRandomInt(400, 500)}/300`
 
 class CreateGroup extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            logoURL: ''
+            logoURL: getRandomKitten()
         }
     }
+
     onSubmit(event) {
         event.preventDefault()
+        const name = event.target.name.value
+        const logo = event.target.logo.value
 
-        this.props.addGroup({
-            name: event.target.name.value,
-            logo: event.target.logo.value
+        Meteor.call('addGroup', {
+            name: name,
+            logo: logo
         })
 
         event.target.name.value = ''
         event.target.logo.value = ''
-
         this.setState({
-            logoURL: ''
+            logoURL: getRandomKitten()
         })
     }
+
     render() {
         const {floatingLabelStyle, floatingLabelFocusStyle, underlineStyle} = styles
         return (
@@ -68,6 +72,7 @@ class CreateGroup extends Component {
                         name="logo"
                         fullWidth={true}
                         required={true}
+                        value={this.state.logoURL}
                         floatingLabelStyle={floatingLabelStyle}
                         floatingLabelFocusStyle={floatingLabelFocusStyle}
                         underlineFocusStyle={underlineStyle}
@@ -77,9 +82,9 @@ class CreateGroup extends Component {
                             })
                         }
                     />
-                    <img src={this.state.logoURL} className="image" />
+                    <img src={this.state.logoURL} className="image"/>
                     {/*
-                        <div className="logo" style={{backgroundImage: `url(${this.state.logoURL})`}}></div>
+                     <div className="logo" style={{backgroundImage: `url(${this.state.logoURL})`}}></div>
                      */}
                     <div className="flex--end">
                         <FloatingActionButton
@@ -95,4 +100,4 @@ class CreateGroup extends Component {
     }
 }
 
-export default connect(mapStateToProps, actions)(SubscribeComponent(CreateGroup))
+export {CreateGroup}

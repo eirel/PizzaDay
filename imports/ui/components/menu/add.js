@@ -1,6 +1,5 @@
 import React from 'react'
 import TextField from 'material-ui/TextField'
-import Subheader from 'material-ui/Subheader'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import {orange500} from 'material-ui/styles/colors'
@@ -22,13 +21,29 @@ const styles = {
     }
 }
 
-const AddItem = ({onItemAdd}) => {
+const onItemAdd = (id) => (event) => {
+    event.preventDefault()
+
+    const name = event.target.name.value
+    const price = event.target.price.value
+
+    Meteor.call('addMenuItem', {
+        id: id,
+        name: name,
+        price: price
+    })
+
+    event.target.name.value = ''
+    event.target.price.value = ''
+    event.target.name.focus()
+}
+
+const AddItem = ({id}) => {
     const {floatingLabelStyle, floatingLabelFocusStyle, underlineStyle} = styles
     return (
-        <form className="form--add-item" onSubmit={onItemAdd}>
-            <Subheader className="tearsheet__subheader">Menu</Subheader>
+        <form className="form--add-item" onSubmit={onItemAdd(id)}>
             <Row>
-                <Col xs="5">
+                <Col xs="6">
                     <TextField
                         floatingLabelText="Item name"
                         hintText="Name"
@@ -40,12 +55,14 @@ const AddItem = ({onItemAdd}) => {
                         underlineFocusStyle={underlineStyle}
                     />
                 </Col>
-                <Col xs="5">
+                <Col xs="4">
                     <TextField
                         floatingLabelText="Item price"
                         hintText="$"
                         name="price"
                         type="number"
+                        step="any"
+                        min={0}
                         fullWidth={true}
                         required={true}
                         floatingLabelStyle={floatingLabelStyle}
@@ -54,7 +71,7 @@ const AddItem = ({onItemAdd}) => {
                     />
                 </Col>
                 <Col xs="2">
-                    <div className="flex--end">
+                    <div className="flex--center">
                         <FloatingActionButton
                             type="submit"
                             className="btn--create"

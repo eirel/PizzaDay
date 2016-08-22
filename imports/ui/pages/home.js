@@ -1,20 +1,20 @@
 import React from 'react'
-import { Meteor } from 'meteor/meteor'
+import {Meteor} from 'meteor/meteor'
 import {composeWithTracker} from 'react-komposer'
-
-const Home = ({ authorized }) => {
-    return (
-        <section className="app__section" id="home">
-            <div className="posa flex--center">
-                <Main authorized={authorized} />
-            </div>
-        </section>
-    )
-}
 
 const toggleSignIn = (event) => {
     event.preventDefault()
     Session.set('Meteor.loginButtons.dropdownVisible', !Session.get('Meteor.loginButtons.dropdownVisible'))
+}
+
+const Home = ({authorized}) => {
+    return (
+        <section className="app__section" id="home">
+            <div className="posa flex--center">
+                <Main authorized={authorized}/>
+            </div>
+        </section>
+    )
 }
 
 const Main = ({authorized}) => {
@@ -29,11 +29,11 @@ const Main = ({authorized}) => {
     return (
         <div>
             <h1 className="tac">Yo, man!</h1>
-            <h3>Seems like you need to <a href="/" className="color--brand underline" onClick={toggleSignIn}>Sign in</a>, bro</h3>
+            <h3>Seems like you need to <a href="/" className="color--brand underline" onClick={toggleSignIn}>Sign in</a>,
+                bro</h3>
         </div>
     )
 }
-
 
 function composer(props, onData) {
     const authorized = Meteor.userId()

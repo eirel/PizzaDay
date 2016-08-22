@@ -65,12 +65,12 @@ a
 	@extend .flex
 	justify-content flex-end
 
-.btn
-	display: inline-block
-	outline none
-	background-color: transparent
-	border none
-	cursor: pointer
+//.btn
+//	display: inline-block
+//	outline none
+//	//background-color: transparent
+//	border none
+//	cursor: pointer
 
 ul
 	padding: 0
@@ -87,6 +87,10 @@ main
 	left: 50%
 	transform: translateX(-50%)
 
+.acenter
+	top: 50%
+	transform: translateY(-50%)
+
 .invisible
 	visibility hidden
 	opacity: 0
@@ -96,6 +100,11 @@ main
 
 .bgcont
 	background-size contain
+	background-repeat no-repeat
+	background-position center center
+
+.bgcover
+	background-size cover
 	background-repeat no-repeat
 	background-position center center
 

@@ -1,6 +1,5 @@
 import React from 'react'
-import CreateGroup  from '../components/groups/create'
-import GroupsGrid  from '../components/groups/grid'
+import { CreateGroup, GroupsGrid } from '../components/groups'
 import Container from 'muicss/lib/react/container'
 import Row from 'muicss/lib/react/row'
 import Col from 'muicss/lib/react/col'

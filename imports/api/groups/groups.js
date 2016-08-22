@@ -2,27 +2,9 @@ import {Mongo} from 'meteor/mongo'
 import {SimpleSchema} from 'meteor/aldeed:simple-schema'
 import {attachSchema} from 'meteor/aldeed:collection2'
 import { EventSchema } from '../events/events'
-
-MenuItemSchema = new SimpleSchema({
-    "name": {
-        type: String,
-        label: "Item name",
-        optional: false
-    },
-
-    "price": {
-        type: String,
-        label: "Item price",
-        optional: false
-    },
-
-    "createdAt": {
-        type: Date,
-        label: "Date of group creation",
-        optional: false
-    }
-})
-
+import { MenuItemSchema } from './menu'
+import { MemberSchema } from './member'
+import { OrderSchema } from './order'
 
 GroupSchema = new SimpleSchema({
     "name": {
@@ -38,18 +20,19 @@ GroupSchema = new SimpleSchema({
     },
 
     "members": {
-        type: [String],
+        type: [MemberSchema],
         label: "Group members"
     },
 
     "menu": {
         type: [MenuItemSchema],
-        label: "Group items menu"
+        label: "Group menu id"
     },
 
-    "events": {
-        type: [EventSchema],
-        label: "Group events"
+    "orders": {
+        type: [OrderSchema],
+        label: "Group list of orders",
+        optional: true
     },
 
     "owner": {

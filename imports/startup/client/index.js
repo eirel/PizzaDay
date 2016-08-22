@@ -4,7 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import { Meteor } from 'meteor/meteor'
 
 Accounts.ui.config({
-    passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
+    passwordSignupFields: 'USERNAME_AND_EMAIL'
 })
 
 Meteor.startup(() => {

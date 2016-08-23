@@ -277,7 +277,7 @@ Meteor.methods({
             }, () => {
 
                 Meteor.call('sendEmail', {
-                    to: 'eirelcc@gmail.com.com',
+                    to: 'eirelcc@gmail.com',
                     from: 'bob@example.com',
                     subject: 'Hello from Meteor!',
                     text: 'This is a test of Email.send.'

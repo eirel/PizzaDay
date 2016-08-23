@@ -66,7 +66,7 @@ class AddOrder extends Component {
     }
 
     render() {
-        const {items, id, isMember, status} = this.props
+        const {items, id, isOrdered} = this.props
         return (
             <form className="form--add-order" onSubmit={this.onOrderAdd(id)}>
                 <Row>
@@ -79,7 +79,7 @@ class AddOrder extends Component {
                             searchText={this.state.name}
                             name="name"
                             required={true}
-                            disabled={status}
+                            disabled={isOrdered}
                             openOnFocus={true}
                             onUpdateInput={this.handleUpdateInput.bind(this)}
                             onNewRequest={this.handleSelect.bind(this)}
@@ -96,7 +96,7 @@ class AddOrder extends Component {
                             type="number"
                             min={1}
                             step="any"
-                            disabled={status}
+                            disabled={isOrdered}
                             fullWidth={true}
                             required={true}
                         />
@@ -104,7 +104,7 @@ class AddOrder extends Component {
                     <Col xz="6" sm="3">
                         <FloatingActionButton
                             type="submit"
-                            disabled={status}
+                            disabled={isOrdered}
                             style={style}
                         >
                             <ContentSend />
@@ -117,9 +117,11 @@ class AddOrder extends Component {
 }
 
 
-function composer(props, onData) {
-    const status = Session.get('Ordering.status')
-    onData(null, {status})
+function composer({members}, onData) {
+    const member = members.find(member => member.id === Meteor.userId())
+    const status = member ? member.status : 'ordering'
+    const isOrdered = status === 'ordered'
+    onData(null, {status, isOrdered})
 }
 
 export default composeWithTracker(composer)(AddOrder)

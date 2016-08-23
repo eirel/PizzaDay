@@ -15,3 +15,6 @@ export const getUsername = (user) =>
 
 export const getUserPhoto = (user) =>
     user ? user.services && user.services.google ? user.services.google.picture : getRandomKitten() : undefined
+
+export const getUserEmail = (user) =>
+    user && user.services && user.services.google ? user.services.google.email : user.emails[0].address

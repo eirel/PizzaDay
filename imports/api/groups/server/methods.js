@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor'
 import {Random} from 'meteor/random'
 import Groups from '../groups'
-import {onAuthCheck, onOwnerCheck, getUsername, getUserPhoto} from '../../users/server/methods'
+import {onAuthCheck, onOwnerCheck, getUsername, getUserPhoto, getUserEmail} from '../../users/server/methods'
 import { Email } from 'meteor/email'
 import { check } from 'meteor/check'
 
@@ -15,6 +15,7 @@ Meteor.methods({
                 members: [{
                     id: Meteor.userId(),
                     username: getUsername(user),
+                    email: getUserEmail(user),
                     photo: getUserPhoto(user),
                     isParticipant: false,
                     status: null,
@@ -48,6 +49,7 @@ Meteor.methods({
                         "members": {
                             id: userId,
                             username: getUsername(user),
+                            email: getUserEmail(user),
                             photo: getUserPhoto(user),
                             isParticipant: false,
                             joinedAt: new Date()
@@ -262,9 +264,10 @@ Meteor.methods({
 
     shouldEventUpdate: function (id) {
         const group = Groups.findOne({_id: id})
-
-        const should = group.members
+        const participants = group.members
             .filter(member => member.isParticipant)
+
+        const should = participants
             .every(participant => participant.status === 'ordered')
 
         if (should) {
@@ -272,6 +275,7 @@ Meteor.methods({
                 group: id,
                 status: 'ordered'
             }, () => {
+
                 Meteor.call('sendEmail', {
                     to: 'eirelcc@gmail.com.com',
                     from: 'bob@example.com',

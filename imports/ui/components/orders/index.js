@@ -19,7 +19,7 @@ const Orders = ({id, menu, orders, members, isEventOrdering, isParticipant}) => 
                 isParticipant && isEventOrdering &&
                 <Row>
                     <Col xz="12" sm="8">
-                        <AddOrder id={id} items={menu}/>
+                        <AddOrder id={id} items={menu} members={members}/>
                     </Col>
                 </Row>
             }

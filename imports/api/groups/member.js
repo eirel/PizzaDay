@@ -13,6 +13,12 @@ export const MemberSchema = new SimpleSchema({
         optional: false
     },
 
+   "email": {
+        type: String,
+        label: "Member email",
+        optional: false
+    },
+
     "photo": {
         type: String,
         label: "Member photo",

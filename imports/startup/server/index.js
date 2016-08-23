@@ -1,4 +1,4 @@
 import './service-configurations'
-import './register-apis'
+import './mail-configurations'
+import './register-api'
 import './fixtures'
-import './mail-url'

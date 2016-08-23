@@ -4,6 +4,22 @@ import Groups from '../groups'
 import {onAuthCheck, onOwnerCheck, getUsername, getUserPhoto, getUserEmail} from '../../users/server/methods'
 import { Email } from 'meteor/email'
 import { check } from 'meteor/check'
+import { SSR } from 'meteor/meteorhacks:ssr'
+
+const mapOrdersToProps = (orders, orderedBy) =>
+    orders.filter(order =>
+            order.orderedBy === orderedBy
+        )
+        .map((order, index) =>
+            Object.assign({}, {
+                ...order,
+                index,
+                price: order.price * order.quantity
+            })
+        )
+
+const getTotalPrice = (items) =>
+    items.reduce((prev, cur) => prev.price + cur.price, 0)
 
 Meteor.methods({
     addGroup: function ({name, logo}) {
@@ -274,15 +290,13 @@ Meteor.methods({
             Meteor.call('updateEventStatus', {
                 group: id,
                 status: 'ordered'
-            }, () => {
-
-                Meteor.call('sendEmail', {
-                    to: 'eirelcc@gmail.com',
-                    from: 'bob@example.com',
-                    subject: 'Hello from Meteor!',
-                    text: 'This is a test of Email.send.'
+            }, () =>
+                Meteor.call('composeEmails', {
+                    participants,
+                    owner: Meteor.users.findOne(group.owner),
+                    orders: group.orders
                 })
-            })
+            )
         }
     },
 
@@ -311,15 +325,34 @@ Meteor.methods({
         })
     },
 
-    sendEmail: function ({to, from, subject, text}) {
-        check([to, from, subject, text], [String])
+    composeEmails: function ({participants, owner, orders}) {
+        SSR.compileTemplate('userMail', Assets.getText('user-mail.html'))
+
+        participants.forEach(participant => {
+            const composed = mapOrdersToProps(orders, participant.username)
+            const data = {
+                orders: composed,
+                total: getTotalPrice(composed)
+            }
+
+            Meteor.call('sendEmail', {
+                to: participant.email,
+                from: getUsername(owner),
+                subject: 'List of orders',
+                html: SSR.render('userMail', data)
+            })
+        })
+    },
+
+    sendEmail: function ({to, from, subject, html}) {
+        check([to, from, subject], [String])
         this.unblock()
 
         Email.send({
             to: to,
             from: from,
             subject: subject,
-            text: text
+            html: html
         })
     }
 })

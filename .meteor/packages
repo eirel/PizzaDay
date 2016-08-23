@@ -30,3 +30,4 @@ differential:event-hooks
 aldeed:simple-schema
 aldeed:collection2
 email
+meteorhacks:ssr

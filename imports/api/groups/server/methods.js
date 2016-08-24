@@ -13,13 +13,13 @@ const mapOrdersToProps = (orders, orderedBy) =>
         .map((order, index) =>
             Object.assign({}, {
                 ...order,
-                index,
+                index: ++index,
                 price: order.price * order.quantity
             })
         )
 
 const getTotalPrice = (items) =>
-    items.reduce((prev, cur) => prev.price + cur.price, 0)
+    items.reduce((prev, cur) => prev ? prev.price : 0 + cur.price, 0)
 
 Meteor.methods({
     addGroup: function ({name, logo}) {
@@ -337,7 +337,7 @@ Meteor.methods({
 
             Meteor.call('sendEmail', {
                 to: participant.email,
-                from: getUsername(owner),
+                from: getUserEmail(owner),
                 subject: 'List of orders',
                 html: SSR.render('userMail', data)
             })
@@ -345,7 +345,7 @@ Meteor.methods({
     },
 
     sendEmail: function ({to, from, subject, html}) {
-        check([to, from, subject], [String])
+        check([to, from, subject, html], [String])
         this.unblock()
 
         Email.send({

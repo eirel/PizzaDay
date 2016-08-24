@@ -1,1 +1,0 @@
-process.env.MAIL_URL = 'smtp://USERNAME:PASSWORD@smtp.sendgrid.net:587'

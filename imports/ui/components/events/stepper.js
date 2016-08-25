@@ -50,13 +50,14 @@ class EventStepper extends React.Component {
         })
     }
 
-    handleStep = (step) => {
-        this.setState({stepIndex: step})
+    handleStep = (id, status) => {
+        // this.setState({stepIndex: step})
+        Meteor.call('updateEventStatus', {group: id, status})
     }
 
     render() {
         const {stepIndex, visited} = this.state
-        const {isOwner, isOrdered} = this.props
+        const {id, isOwner, isOrdered} = this.props
 
         return (
             <div style={styles.root}>
@@ -72,12 +73,12 @@ class EventStepper extends React.Component {
                         </StepButton>
                     </Step>
                     <Step completed={visited.indexOf(2) !== -1} active={stepIndex === 2}>
-                        <StepButton onClick={() => isOwner && isOrdered ? this.handleStep(2) : null}>
+                        <StepButton onClick={() => isOwner && isOrdered && this.handleStep(id, 'delivering')}>
                             Delivering...
                         </StepButton>
                     </Step>
                     <Step completed={visited.indexOf(3) !== -1} active={stepIndex === 3}>
-                        <StepButton onClick={() => isOwner && isOrdered ? this.handleStep(3) : null}>
+                        <StepButton onClick={() => isOwner && isOrdered && this.handleStep(id, 'delivered')}>
                             Delivered
                         </StepButton>
                     </Step>
@@ -87,36 +88,12 @@ class EventStepper extends React.Component {
     }
 }
 
-const mapStatusToStep = (status) => {
-    switch (status) {
-        case 'ordering':
-            return 0
-        case 'ordered':
-            return 1
-        case 'delivering':
-            return 2
-        case 'delivered':
-            return 3
-    }
-}
-
-const mapStatusToVisited = (status) => {
-    switch (status) {
-        case 'ordering':
-            return [0]
-        case 'ordered':
-            return [0, 1]
-        case 'delivering':
-            return [0, 1, 2]
-        case 'delivered':
-            return [0, 1, 2, 3]
-    }
-}
-
 const composer = ({status}, onData) => {
-    const step = mapStatusToStep(status)
-    const visited = mapStatusToVisited(status)
-    const isOrdered = status === 'ordered'
+    const statuses = ['ordering', 'ordered', 'delivering', 'delivered']
+    const step = (step => step > -1 ? step : 0)(statuses.indexOf(status))
+
+    const visited = Object.keys(statuses).map(key => ~~key).slice(0, step + 1)
+    const isOrdered = statuses.slice(0, step + 1).indexOf('ordered') > -1
 
     onData(null, {isOrdered, step, visited})
 }

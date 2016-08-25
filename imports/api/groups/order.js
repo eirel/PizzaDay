@@ -30,6 +30,12 @@ export const OrderSchema = new SimpleSchema({
         label: "Who ordered the item",
         optional: false
     },
+
+    "status": {
+        type: String,
+        label: "Order item status",
+        optional: true
+    },
     
     "createdAt": {
         type: Date,

@@ -22,7 +22,7 @@ const Main = ({authorized}) => {
         return (
             <div>
                 <h1 className="tac">Welcome back!</h1>
-                <h3>Check out our upcoming <a href="/events" className="color--brand underline">events</a>!</h3>
+                <h3>Check out our <a href="/groups" className="color--brand underline">groups</a>!</h3>
             </div>
         )
     }

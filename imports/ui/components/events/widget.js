@@ -28,7 +28,7 @@ const removeParticipant = (id) =>
 const removeEvent = (id) =>
     Meteor.call('removeEventByGroup', id, () => {
         Meteor.call('removeParticipants', id)
-        Meteor.call('removeOrderItems', {id, userId: Meteor.userId()})
+        Meteor.call('removeOrderItems', {id})
     })
 
 const EventWidget = ({id, name, date, members, status, isOwner, isMember, isParticipant}) => {
@@ -47,7 +47,7 @@ const EventWidget = ({id, name, date, members, status, isOwner, isMember, isPart
                     <b>Status:</b>
                     <span> {status}</span>
 
-                    <EventStepper status={status} isOwner={isOwner} />
+                    <EventStepper id={id} status={status} isOwner={isOwner} />
                 </div>
 
                 <div style={style.entry}>

@@ -19,14 +19,21 @@ const calcTotal = (orders) =>
     orders.reduce((prev, cur) => prev + cur.price * cur.quantity, 0)
 
 const toggleOrderStatus = (id, status) => {
+    const update = status === 'ordering' ? 'ordered' : 'ordering'
 
     Meteor.call('updateMemberStatus', {
         id,
         userId: Meteor.userId(),
-        status: status === 'ordering' ? 'ordered' : 'ordering'
+        status: update
     })
-}
 
+     Meteor.call('updateOrderItemsStatus', {
+        id,
+        user: Meteor.user(),
+        status: update
+    })
+
+}
 
 const OrderTable = ({id, orders, status, isParticipant, isOrdered}) => {
     return (
@@ -66,7 +73,6 @@ const OrderTable = ({id, orders, status, isParticipant, isOrdered}) => {
                             groupId={id}
                             index={index}
                             isParticipant={isParticipant}
-                            status={status}
                             {...item}
                         />
                     )

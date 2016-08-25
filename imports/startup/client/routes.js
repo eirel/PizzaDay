@@ -5,7 +5,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router'
 import Layout from '../../ui/layouts'
 import Home from '../../ui/pages/home'
 import GroupsPage from '../../ui/pages/groups'
-import EventsPage from '../../ui/pages/events'
+// import EventsPage from '../../ui/pages/events'
 import SingleGroup from '../../ui/pages/single'
 import ProfilePage from '../../ui/pages/profile'
 
@@ -61,23 +61,23 @@ FlowRouter.route('/groups/:id', {
     }
 })
 
-FlowRouter.route('/events', {
-    name: 'events',
-    triggersEnter: [redirectOnSignedOut],
-    action() {
-        mount(Layout, {
-            index: 3,
-            content: (<EventsPage />)
-        })
-    }
-})
+// FlowRouter.route('/events', {
+//     name: 'events',
+//     triggersEnter: [redirectOnSignedOut],
+//     action() {
+//         mount(Layout, {
+//             index: 3,
+//             content: (<EventsPage />)
+//         })
+//     }
+// })
 
 FlowRouter.route('/profile', {
     name: 'invites',
     triggersEnter: [redirectOnSignedOut],
     action() {
         mount(Layout, {
-            index: 4,
+            index: 3,
             content: (<ProfilePage />)
         })
     }

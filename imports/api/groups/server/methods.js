@@ -1,29 +1,37 @@
 import {Meteor} from 'meteor/meteor'
 import {Random} from 'meteor/random'
-import Groups from '../groups'
 import {onAuthCheck, onOwnerCheck, getUsername, getUserPhoto, getUserEmail} from '../../users/server/methods'
 import { Email } from 'meteor/email'
 import { check } from 'meteor/check'
 import { SSR } from 'meteor/meteorhacks:ssr'
+import Groups from '../groups'
+import Events from '../../events/events'
 
-const mapOrdersToProps = (orders, orderedBy) =>
+const mapOrdersToProps = (orders) =>
+    orders.map((order, index) =>
+        Object.assign({}, {
+            ...order,
+            index: ++index,
+            price: order.price * order.quantity
+        })
+    )
+
+const filterOrdersByUsername = (orders, username) =>
     orders.filter(order =>
-            order.orderedBy === orderedBy
-        )
-        .map((order, index) =>
-            Object.assign({}, {
-                ...order,
-                index: ++index,
-                price: order.price * order.quantity
-            })
-        )
+        order.orderedBy === username
+    )
 
 const getTotalPrice = (items) =>
-    items.reduce((prev, cur) => prev ? prev.price : 0 + cur.price, 0)
+    items.map(item => 
+            item.price
+        ) 
+        .reduce((total, num) =>
+            total + num
+        , 0)
 
-Meteor.methods({
-    addGroup: function ({name, logo}) {
-        onAuthCheck(() => {
+    Meteor.methods({
+        addGroup: function ({name, logo}) {
+            onAuthCheck(() => {
             const user = Meteor.user()
             Groups.insert({
                 name: name,
@@ -86,7 +94,7 @@ Meteor.methods({
                     }
                 }
             )
-            Meteor.call('removeOrderItems', {
+            Meteor.call('removeOrderItemsByUserId', {
                 id: id,
                 userId: userId
             })
@@ -118,7 +126,7 @@ Meteor.methods({
                     }
                 }
             )
-            Meteor.call('removeOrderItems', {id, userId})
+            Meteor.call('removeOrderItemsByUserId', {id, userId})
         })
     },
 
@@ -202,7 +210,7 @@ Meteor.methods({
         )
     },
 
-    addOrderItem: function ({id, name, price, quantity}) {
+    addOrderItem: function ({id, user, name, price, quantity}) {
         onAuthCheck(() =>
             Groups.update(
                 {_id: id},
@@ -213,7 +221,8 @@ Meteor.methods({
                             name: name,
                             price: price,
                             quantity: quantity,
-                            orderedBy: getUsername(Meteor.user()),
+                            orderedBy: getUsername(user),
+                            status: 'ordering',
                             createdAt: new Date()
                         }
                     }
@@ -235,7 +244,7 @@ Meteor.methods({
         })
     },
 
-    removeOrderItems: function ({id, userId}) {
+    removeOrderItemsByUserId: function ({id, userId}) {
         onAuthCheck(() => {
             const user = Meteor.users.findOne({_id: userId})
             const orderedBy = getUsername(user)
@@ -249,6 +258,19 @@ Meteor.methods({
                 }
             )
         })
+    },
+
+    removeOrderItems: function ({id}) {
+        onAuthCheck(() =>
+            Groups.update(
+                {_id: id},
+                {
+                    $set: {
+                        "orders": []
+                    }
+                }
+            )
+        )
     },
 
     updateOrderItemQuantity: function ({id, item, quantity}) {
@@ -278,28 +300,6 @@ Meteor.methods({
         })
     },
 
-    shouldEventUpdate: function (id) {
-        const group = Groups.findOne({_id: id})
-        const participants = group.members
-            .filter(member => member.isParticipant)
-
-        const should = participants
-            .every(participant => participant.status === 'ordered')
-
-        if (should) {
-            Meteor.call('updateEventStatus', {
-                group: id,
-                status: 'ordered'
-            }, () =>
-                Meteor.call('composeEmails', {
-                    participants,
-                    owner: Meteor.users.findOne(group.owner),
-                    orders: group.orders
-                })
-            )
-        }
-    },
-
     updateOrderItemsStatus: function ({id, user, status}) {
         onAuthCheck(() => {
             const orderedBy = getUsername(user)
@@ -325,14 +325,44 @@ Meteor.methods({
         })
     },
 
-    composeEmails: function ({participants, owner, orders}) {
+    shouldEventUpdate: function (id) {
+        const group = Groups.findOne({_id: id})
+        const participants = group.members
+            .filter(member => member.isParticipant)
+
+        const should = participants
+            .every(participant => participant.status === 'ordered')
+
+        if (should) {
+            Meteor.call('updateEventStatus', {
+                group: id,
+                status: 'ordered'
+            }, () =>
+                Meteor.call('composeEmails', {
+                    event: Events.findOne({group: id}),
+                    owner: Meteor.users.findOne(group.owner),
+                    orders: group.orders,
+                    participants
+                })
+            )
+        }
+    },
+
+    composeEmails: function ({event, owner, orders, participants}) {
         SSR.compileTemplate('userMail', Assets.getText('user-mail.html'))
 
         participants.forEach(participant => {
-            const composed = mapOrdersToProps(orders, participant.username)
+            const unfiltered = mapOrdersToProps(orders)
+            const filtered = filterOrdersByUsername(unfiltered, participant.username)
+
             const data = {
-                orders: composed,
-                total: getTotalPrice(composed)
+                name: event.name,
+                date: event.date.toDateString('dd-MMM-yyyy'),
+                filtered: filtered,
+                summary: getTotalPrice(filtered),
+                isCreator: participant.id === owner._id,
+                unfiltered: unfiltered,
+                total: getTotalPrice(unfiltered)
             }
 
             Meteor.call('sendEmail', {

@@ -25,12 +25,12 @@ const Orders = ({id, menu, orders, members, isEventOrdering, isParticipant}) => 
             }
             {
                 isEventOrdering &&
-                    <OrderTable
-                        id={id}
-                        orders={orders}
-                        members={members}
-                        isParticipant={isParticipant}
-                    />
+                <OrderTable
+                    id={id}
+                    orders={orders}
+                    members={members}
+                    isParticipant={isParticipant}
+                />
             }
             {
                 isParticipant && !isEventOrdering &&

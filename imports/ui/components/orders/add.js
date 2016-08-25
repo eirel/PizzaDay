@@ -50,7 +50,8 @@ class AddOrder extends Component {
             event.preventDefault()
 
             Meteor.call('addOrderItem', {
-                id: id,
+                id,
+                user: Meteor.user(),
                 name: this.state.name,
                 price: this.state.price,
                 quantity: event.target.quantity.value

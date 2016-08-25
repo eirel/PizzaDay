@@ -7,21 +7,35 @@
 </head>
 
 <body itemscope itemtype="http://schema.org/EmailMessage">
+<style>
+    .order__table tr:last-child td {
+        border-bottom: none !important;
+    }
+</style>
 <table>
     <tr>
-        <td></td>
+        <td colspan="4" style="padding: 10px 0;font-size: 24px;line-height: 1.4;">
+            <b style="font-weight: 700;">Event name: </b>{{name}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="padding: 10px 0 30px;font-size: 24px;line-height: 1.4;">
+            <b style="font-weight: 700;">Event date: </b>{{date}}
+        </td>
+    </tr>
+    <tr>
         <td width="800">
-            <table width="100%" style="border: 1px solid #eee;">
+            <table class="order__table" width="100%" style="border: 1px solid #eee;">
                 <thead>
                     <tr>
                         <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">#</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">Item name</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">Items quantity</th>
-                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee;">Items price</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">Name</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">Quantity</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee;">Subtotal price</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each order in orders}}
+                    {{#each order in filtered}}
                         <tr>
                             <td style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">{{order.index}}</td>
                             <td style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">{{order.name}}</td>
@@ -34,8 +48,47 @@
         </td>
     </tr>
     <tr>
-        <td><b style="font-weight: 700; font-size: 24px; line-height: 1.4;">Total: </b>{{total}}</td>
+        <td colspan="2" style="padding-top: 20px;font-style: italic;font-size: 24px;line-height: 1.4;text-align: right;">
+            <b style="font-weight: 700;">Your summary: </b>{{summary}}$
+        </td>
     </tr>
+
+    {{#if isCreator}}
+        <tr>
+            <td colspan="4" style="padding: 10px 0;font-size: 24px;line-height: 1.4;">
+                <b style="font-weight: 700;">Event summary: </b>
+            </td>
+        </tr>
+        <tr>
+            <td width="800">
+                <table class="order__table" width="100%" style="border: 1px solid #eee;">
+                    <thead>
+                        <tr>
+                            <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">#</th>
+                            <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">Name</th>
+                            <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">Quantity</th>
+                            <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee;">Subtotal price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each order in unfiltered}}
+                            <tr>
+                                <td style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">{{order.index}}</td>
+                                <td style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">{{order.name}}</td>
+                                <td style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">x{{order.quantity}}</td>
+                                <td style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; ">{{order.price}}$</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding-top: 20px;font-style: italic;font-size: 24px;line-height: 1.4;text-align: right;">
+                <b style="font-weight: 700;">Total: </b>{{total}}$
+            </td>
+        </tr>
+    {{/if}}
 </table>
 </body>
 </html>

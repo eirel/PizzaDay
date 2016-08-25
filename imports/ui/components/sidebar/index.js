@@ -12,8 +12,8 @@ const Sidebar = ({index, menu}) => (
         <SelectableList defaultValue={index} className="app__nav">
             <ListItem href="/" primaryText="Home" leftIcon={<ActionHome />} value={1}/>
             <ListItem href="/groups" primaryText="User groups" leftIcon={<SocialPeople />} value={2}/>
-            <ListItem href="/events" primaryText="Events" leftIcon={<ActionEvent />} value={3}/>
-            <ListItem href="/profile" primaryText="Profile" leftIcon={<ActionSettings />} value={4}/>
+            {/* <ListItem href="/events" primaryText="Events" leftIcon={<ActionEvent />} value={3}/> */}
+            <ListItem href="/profile" primaryText="Profile" leftIcon={<ActionSettings />} value={3}/>
         </SelectableList>
     </div>
 )

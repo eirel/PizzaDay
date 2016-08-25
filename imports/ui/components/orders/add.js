@@ -82,6 +82,7 @@ class AddOrder extends Component {
                             required={true}
                             disabled={isOrdered}
                             openOnFocus={true}
+                            menuStyle = {{maxHeight: '300px'}}
                             onUpdateInput={this.handleUpdateInput.bind(this)}
                             onNewRequest={this.handleSelect.bind(this)}
                             dataSourceConfig={dataSourceConfig}

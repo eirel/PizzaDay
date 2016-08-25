@@ -108,10 +108,14 @@ a.underline:hover
 	border-right-color: rgb(217, 217, 217)
 	border-left-color: rgb(217, 217, 217)
 	max-width: 100%
-	padding: 20px
 	margin-bottom: 30px
+	padding 20px
+	max-height 420px
 	overflow: hidden
 	position: relative
+	
+	&.high
+		max-height initial
 
 	&::after
 		content ''
@@ -123,6 +127,14 @@ a.underline:hover
 		left: 0
 		height: 10px
 		width: 100%
+		
+// .tearsheet__content
+// 	width 100%
+// 	height 100%
+// 	max-height inherit
+// 	overflow-y scroll
+// 	margin-left 16px
+// 	padding 20px 20px 20px 4px    
 
 .tearsheet__subheader
 	margin-top: -20px
@@ -221,8 +233,27 @@ a.underline:hover
 
 .menu
 	padding-bottom: 30px
+	
+//.menu__header
+//
+//	th
+//		padding 0 12px !important
+//
+//	tr > th:first-child
+//		width 12% !important
 
-.menu__item
+//.menu__item
+//	td, .cell__container
+//		padding 0 12px !important
+//
+//	& > td:first-child
+//		width 12% !important
+//		padding 0 12px !important
+//		text-align center
+
+
+.menu__item,
+.order__item
 	padding: 15px 0
 	border-bottom: 2px solid rgba(224, 224, 224,.9)
 
@@ -231,7 +262,7 @@ a.underline:hover
 
 	&:last-child
 		border-bottom: none !important
-
+		
 	.quantity__btn
 		display: inline-block !important
 

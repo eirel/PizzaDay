@@ -19,6 +19,12 @@ export const OrderSchema = new SimpleSchema({
         optional: false
     },
 
+    "discount": {
+        type: String,
+        label: "Order discount",
+        optional: true
+    },
+
     "quantity": {
         type: Number,
         label: "Orders quantity",

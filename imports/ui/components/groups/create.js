@@ -53,7 +53,7 @@ class CreateGroup extends Component {
     render() {
         const {floatingLabelStyle, floatingLabelFocusStyle, underlineStyle} = styles
         return (
-            <div className="tearsheet">
+            <div className="tearsheet high">
                 <form className="form--group-create" onSubmit={event => this.onSubmit(event)}>
                     <Subheader className="tearsheet__subheader">Create new group</Subheader>
                     <TextField

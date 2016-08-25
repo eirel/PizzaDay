@@ -12,7 +12,7 @@ const mapOrdersToProps = (orders) =>
         Object.assign({}, {
             ...order,
             index: ++index,
-            price: order.price * order.quantity
+            price: Number((order.price * order.quantity - (~~order.discount ? (~~order.discount * order.price / 100) : 0)).toFixed(2))
         })
     )
 
@@ -220,6 +220,7 @@ const getTotalPrice = (items) =>
                             id: Random.id(),
                             name: name,
                             price: price,
+                            discount: 0,
                             quantity: quantity,
                             orderedBy: getUsername(user),
                             status: 'ordering',
@@ -280,6 +281,19 @@ const getTotalPrice = (items) =>
                 {
                     $set: {
                         "orders.$.quantity": quantity
+                    }
+                }
+            )
+        )
+    },
+        
+    updateOrderItemDiscount: function ({id, item, discount}) {
+        onAuthCheck(() =>
+            Groups.update(
+                {_id: id, "orders.id": item},
+                {
+                    $set: {
+                        "orders.$.discount": discount
                     }
                 }
             )

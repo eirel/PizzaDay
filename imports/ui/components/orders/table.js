@@ -16,7 +16,10 @@ const styles = {
 }
 
 const calcTotal = (orders) =>
-    orders.reduce((prev, cur) => prev + cur.price * cur.quantity, 0)
+    orders.reduce((prev, cur) =>
+        prev + Number((cur.price * cur.quantity - (~~cur.discount ? (~~cur.discount / 100 * cur.price) : 0)).toFixed(2))
+    , 0)
+
 
 const toggleOrderStatus = (id, status) => {
     const update = status === 'ordering' ? 'ordered' : 'ordering'
@@ -35,7 +38,7 @@ const toggleOrderStatus = (id, status) => {
 
 }
 
-const OrderTable = ({id, orders, status, isParticipant, isOrdered}) => {
+const OrderTable = ({id, orders, status, isParticipant, isOrdered, isGroupOwner}) => {
     return (
         <Table
             selectable={false}
@@ -52,11 +55,12 @@ const OrderTable = ({id, orders, status, isParticipant, isOrdered}) => {
                 <TableRow>
                     <TableHeaderColumn style={{width: '5%'}} tooltip={"Order №"}>#</TableHeaderColumn>
                     <TableHeaderColumn style={{width: '20%'}} tooltip={"Order name"}>Name</TableHeaderColumn>
-                    <TableHeaderColumn tooltip={"Order price"}>Price</TableHeaderColumn>
+                    <TableHeaderColumn style={{width: '10%'}} tooltip={"Order price"}>Price</TableHeaderColumn>
                     <TableHeaderColumn style={{width: '20%', textAlign: 'center'}} tooltip={"Orders quantity"}>Quantity</TableHeaderColumn>
-                    <TableHeaderColumn tooltip={"Order subtotal"}>Subtotal</TableHeaderColumn>
+                    <TableHeaderColumn style={{width: '10%', textAlign: 'center'}} tooltip={"Order discount"}>Discount</TableHeaderColumn>
+                    <TableHeaderColumn style={{width: '10%'}} tooltip={"Order subtotal"}>Subtotal</TableHeaderColumn>
                     <TableHeaderColumn style={{width: '20%'}} tooltip={"Ordered by"}>Ordered by</TableHeaderColumn>
-                    <TableHeaderColumn tooltip={"Order Status"}>Status</TableHeaderColumn>
+                    <TableHeaderColumn style={{width: '10%'}} tooltip={"Order Status"}>Status</TableHeaderColumn>
                     <TableHeaderColumn style={{width: '5%'}}></TableHeaderColumn>
                 </TableRow>
             </TableHeader>
@@ -73,6 +77,7 @@ const OrderTable = ({id, orders, status, isParticipant, isOrdered}) => {
                             groupId={id}
                             index={index}
                             isParticipant={isParticipant}
+                            isGroupOwner={isGroupOwner}
                             {...item}
                         />
                     )

@@ -11,9 +11,9 @@ import Events from '../../../api/events/events'
 export const getUsername = (user) =>
     user ? user.profile ? user.profile.name : user.username : undefined
 
-const Orders = ({id, menu, orders, members, isEventOrdering, isParticipant}) => {
+const Orders = ({id, menu, orders, members, isEventOrdering, isParticipant, isGroupOwner}) => {
     return (
-        <div className="order tearsheet wide">
+        <div className="order tearsheet wide high">
             <Subheader className="tearsheet__subheader">Order list</Subheader>
             {
                 isParticipant && isEventOrdering &&
@@ -30,6 +30,7 @@ const Orders = ({id, menu, orders, members, isEventOrdering, isParticipant}) => 
                     orders={orders}
                     members={members}
                     isParticipant={isParticipant}
+                    isGroupOwner={isGroupOwner}
                 />
             }
             {
@@ -38,7 +39,6 @@ const Orders = ({id, menu, orders, members, isEventOrdering, isParticipant}) => 
                     <i>We've sent an email with your orders. Check it out!</i>
                 </h4>
             }
-
         </div>
     )
 }

@@ -56,6 +56,7 @@ const SingleGroup = ({_id, name, logo, owner, members, menu, orders, event, isOw
                     <Menu
                         id={_id}
                         menu={menu}
+                        isOwner={isOwner}
                         isMember={isMember}
                     />
                 </Col>
@@ -86,6 +87,7 @@ const SingleGroup = ({_id, name, logo, owner, members, menu, orders, event, isOw
                         members={members}
                         orders={orders}
                         isParticipant={isParticipant}
+                        isGroupOwner={isOwner}
                     />
                 </Col>
             </Row>

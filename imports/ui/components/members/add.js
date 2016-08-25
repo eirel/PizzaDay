@@ -70,6 +70,7 @@ class AddMember extends Component {
                             required={true}
                             openOnFocus={true}
                             searchText={this.state.name}
+                            menuStyle = {{maxHeight: '300px'}}
                             onUpdateInput={this.handleUpdateInput.bind(this)}
                             onNewRequest={this.handleSelect.bind(this)}
                             dataSourceConfig={dataSourceConfig}

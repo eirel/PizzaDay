@@ -21,23 +21,30 @@ const mapItemsToProps = (rows, mappings) =>
 const onDelete = (id, items) =>
     Meteor.call('removeMenuItems', {id, items})
 
-const MenuTable = ({id, menu, mappings, blacklist, isMember}) => {
+const MenuTable = ({id, menu, mappings, blacklist, isMember, isOwner}) => {
     return (
         <Table
             selectable={true}
             multiSelectable={true}
             style={styles.table}
+            height={'192px'}
+            fixedHeader={true}
             onRowSelection={rows => blacklist = mapItemsToProps(rows, mappings)}
         >
             <TableHeader
                 displaySelectAll={isMember}
                 adjustForCheckbox={isMember}
+                className={'menu__header'}
                 enableSelectAll={menu.length ? true : false}
             >
                 <TableRow>
-                    <TableHeaderColumn style={{width: '10%'}} tooltip={"Item №"}>#</TableHeaderColumn>
-                    <TableHeaderColumn style={{width: '35%'}} tooltip={"Item name"}>Name</TableHeaderColumn>
+                    <TableHeaderColumn style={{width: '8%'}} tooltip={"Item №"}>#</TableHeaderColumn>
+                    <TableHeaderColumn style={{width: '30%'}} tooltip={"Item name"}>Name</TableHeaderColumn>
                     <TableHeaderColumn style={{width: '15%'}} tooltip={"Item price"}>Price</TableHeaderColumn>
+                    {/*
+                     <TableHeaderColumn style={{width: '15%'}} tooltip={"Discount coupon"}>Discount</TableHeaderColumn>
+                    */}
+
                     {
                         isMember &&
                         <TableHeaderColumn style={{width: '15%', padding: 0, textAlign: 'center'}}>
@@ -66,7 +73,13 @@ const MenuTable = ({id, menu, mappings, blacklist, isMember}) => {
                             ...mappings,
                             item.id
                         ]
-                        return <MenuTableItem key={item.id} index={index} groupId={id} isMember={isMember} {...item} />
+                        return <MenuTableItem
+                            key={item.id}
+                            index={index}
+                            groupId={id}
+                            isMember={isMember}
+                            isOwner={isOwner}
+                            {...item} />
                     })
                 }
             </TableBody>
